@@ -1,18 +1,12 @@
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2");
 
 const dbConfig = {
-    host: "mysql-stevenromano.alweysdata.net",
-    user: "stevenromano",
-    password: "Rom@no12e",
-    database: "stevenromano_clientes",
+    host: "mysql-tanukistyles.alwaysdata.net",
+    user: "368585",
+    password: "46154774",
+    database: "tanukistyles_proyectos",
 };
 
-connection.connect(err => {
-    if (err) {
-    console.error("Error de conexión:", err);
-    } else {
-    console.log("Conectado a AlwaysData");
-    }
-});
+const db = mysql.createConnection(dbConfig);
 
-module.exports = connection;
+module.exports = db;
