@@ -1,13 +1,27 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = 8001;
 
+// Seguridad basica y control de trafico
+app.use(helmet());
+app.use(
+    rateLimit({
+        windowMs: 15 * 60 * 1000,
+        max: 100,
+        standardHeaders: true,
+        legacyHeaders: false,
+        message: { message: "Demasiadas solicitudes, intenta mas tarde" }
+    })
+);
+
 // Habilitar CORS
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 // Rutas
 app.use("/items", require("./routes/items.routes"));
