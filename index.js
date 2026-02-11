@@ -10,7 +10,7 @@ const PORT = 8001;
 app.use(helmet());
 app.use(
     rateLimit({
-        windowMs: 15 * 60 * 1000,
+        windowMs: 5 * 60 * 1000,
         max: 100,
         standardHeaders: true,
         legacyHeaders: false,
