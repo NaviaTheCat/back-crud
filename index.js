@@ -7,26 +7,7 @@ const app = express();
 const PORT = 8001;
 
 // Seguridad basica y control de trafico
-app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            imgSrc: ["'self'", "data:", "https:"],
-            connectSrc: ["'self'"],
-            fontSrc: ["'self'"],
-            objectSrc: ["'none'"],
-            mediaSrc: ["'self'"],
-            frameSrc: ["'none'"]
-        }
-    },
-    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
-    noSniff: true,
-    xssFilter: true,
-    referrerPolicy: { policy: "strict-origin-when-cross-origin" }
-}));
-
+app.use(helmet());
 app.use(
     rateLimit({
         windowMs: 5 * 60 * 1000,
@@ -37,14 +18,8 @@ app.use(
     })
 );
 
-// Habilitar CORS con restricciones
-app.use(cors({
-    origin: process.env.ALLOWED_ORIGINS || "http://localhost:3000" || "https://crud-clientes-production-cec1.up.railway.app",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
+// Habilitar CORS
+app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
