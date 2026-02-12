@@ -39,7 +39,7 @@ app.use(
 
 // Habilitar CORS con restricciones
 app.use(cors({
-    origin: process.env.ALLOWED_ORIGINS || "http://localhost:3000",
+    origin: process.env.ALLOWED_ORIGINS || "http://localhost:3000" || "https://crud-clientes-production-cec1.up.railway.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
