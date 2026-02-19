@@ -27,5 +27,5 @@ app.use(limiter);
 
 app.use("/items", itemsRoutes);
 
-const PORT = process.env.PORT || 8001;
+const PORT = 8001;
 app.listen(PORT, () => console.log("Server running on port " + PORT));
