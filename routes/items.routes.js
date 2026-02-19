@@ -1,27 +1,32 @@
+
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/items.controller");
-const rateLimit = require("express-rate-limit");
+const apiKey = require("../middlewares/apiKey.middleware");
+const { body, param } = require("express-validator");
 
-const readLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	max: 160,
-	standardHeaders: true,
-	legacyHeaders: false,
-	message: { message: "Demasiadas solicitudes, intenta mas tarde" }
-});
+router.get("/", apiKey, controller.getItems);
 
-const writeLimiter = rateLimit({
-	windowMs: 10 * 60 * 1000,
-	max: 5,
-	standardHeaders: true,
-	legacyHeaders: false,
-	message: { message: "Demasiadas solicitudes, intenta mas tarde" }
-});
+router.post(
+  "/",
+  apiKey,
+  body("nombre").isString().trim().isLength({ min: 2, max: 100 }),
+  controller.createItem
+);
 
-router.get("/", readLimiter, controller.getItems);
-router.post("/", writeLimiter, controller.createItem);
-router.put("/:id", writeLimiter, controller.updateItem);
-router.delete("/:id", writeLimiter, controller.deleteItem);
+router.put(
+  "/:id",
+  apiKey,
+  param("id").isInt(),
+  body("nombre").isString().trim().isLength({ min: 2, max: 100 }),
+  controller.updateItem
+);
+
+router.delete(
+  "/:id",
+  apiKey,
+  param("id").isInt(),
+  controller.deleteItem
+);
 
 module.exports = router;
