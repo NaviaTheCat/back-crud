@@ -6,8 +6,6 @@ const rateLimit = require("express-rate-limit");
 const app = express();
 const PORT = 8001;
 
-// Configurar Express para confiar en proxies (necesario para X-Forwarded-For)
-app.set('trust proxy', true);
 
 // Seguridad basica y control de trafico
 app.use(helmet());
