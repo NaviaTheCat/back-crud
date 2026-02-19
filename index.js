@@ -13,11 +13,7 @@ app.disable("x-powered-by");
 app.use(helmet());
 app.use(express.json({ limit: "10kb" }));
 
-app.use(cors({
-  origin: "https://crud-clientes-production-cec1.up.railway.app",
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"]
-}));
+app.use(cors);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
